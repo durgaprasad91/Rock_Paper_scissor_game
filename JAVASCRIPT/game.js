@@ -6,6 +6,24 @@ let score =JSON.parse(localStorage.getItem('score')) || {
 
 updatescoreElement();
 
+
+let isAutoplay = false;
+let interval;
+function autoPlay(){
+    if(!isAutoplay){
+        interval = setInterval(function(){
+             const playerMove = pickComputerMove();
+             playGame(playerMove);
+         },1000);
+         isAutoplay = true;
+     }else{
+         clearInterval(interval);
+         isAutoplay =false;
+     }
+}
+
+
+
 function playGame(playerMove){
     const computerMove =pickComputerMove();
 
@@ -58,7 +76,6 @@ function playGame(playerMove){
     function updatescoreElement(){
         document.querySelector('.js-score').innerHTML =`wins:${score.win}   lose:${score.losse}   tie:${score.tie}`;
     }
-    
 function pickComputerMove(){
     const randomNumber=Math.random();
 
